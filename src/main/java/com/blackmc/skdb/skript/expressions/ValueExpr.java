@@ -1,7 +1,5 @@
 package com.blackmc.skdb.skript.expressions;
 
-import java.util.concurrent.CompletableFuture;
-
 import javax.annotation.Nullable;
 
 import com.blackmc.skdb.database.Database;

@@ -3,14 +3,12 @@ package com.blackmc.skdb.database;
 public class DatabaseConfiguration {
 
     private String driver;
-    private String dialect;
     private String username;
     private String password;
     private String url;
 
     public DatabaseConfiguration(DatabaseType type, String ip, String port, String database, String username, String password) {
         this.driver = type.getDriver();
-        this.dialect = type.getDialect();
         this.username = username;
         this.password = password != null ? password : "";
         this.url = buildURLString(type, ip, port, database);
@@ -18,7 +16,6 @@ public class DatabaseConfiguration {
  
     public DatabaseConfiguration(DatabaseType type, String url, String username, String password) {
         this.driver = type.getDriver();
-        this.dialect = type.getDialect();
         this.username = username;
         this.password = password != null ? password : "";
         this.url = url;
@@ -31,10 +28,6 @@ public class DatabaseConfiguration {
         } else {
             return null;
         }
-    }
-    
-    public String getDialect() {
-        return dialect;
     }
 
     public String getDriver() {
@@ -55,10 +48,6 @@ public class DatabaseConfiguration {
 
     public void setDriver(String driver) {
         this.driver = driver;
-    }
-
-    public void setDialect(String dialect) {
-        this.dialect = dialect;
     }
 
 }

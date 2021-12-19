@@ -1,18 +1,16 @@
 package com.blackmc.skdb.database;
 
 public enum DatabaseType {
-    MYSQL("com.mysql.cj.jdbc.Driver", "org.hibernate.dialect.MySQL5Dialect"),
-    ORACLE("oracle.jdbc.OracleDriver", "org.hibernate.dialect.Oracle12cDialect"),
-    POSTGRESQL("org.postgresql.Driver", "	org.hibernate.dialect.PostgreSQL95Dialect"),
-    SQLSERVER("com.microsoft.sqlserver.jdbc.SQLServerDriver", "org.hibernate.dialect.SQLServer2012Dialect"),
-    MARIADB("org.mariadb.jdbc.Driver", "org.hibernate.dialect.MariaDB53Dialect");
+    MYSQL("com.mysql.cj.jdbc.Driver"),
+    ORACLE("oracle.jdbc.OracleDriver"),
+    POSTGRESQL("org.postgresql.Driver"),
+    SQLSERVER("com.microsoft.sqlserver.jdbc.SQLServerDriver"),
+    MARIADB("org.mariadb.jdbc.Driver");
 
     private String driver;
-    private String dialect;
 
-    DatabaseType(String driver, String dialect) {
+    DatabaseType(String driver) {
         this.driver = driver;
-        this.dialect = dialect;
     }
 
     public static DatabaseType getByName(String name) {
@@ -25,10 +23,6 @@ public enum DatabaseType {
 
     public String getDriver() {
         return driver;
-    }
-
-    public String getDialect() {
-        return dialect;
     }
 
     public String getName() {
