@@ -23,14 +23,13 @@ buildNumber.properties
 # Exclude maven wrapper
 !/.mvn/wrapper/maven-wrapper.jar
 
+# VsCode
+/.vscode/
+
 # IntelliJ
 /out/
 /.idea/
 *.iml
-
-## gradle ##
-/build/
-/.gradle/
 
 # MacOS
 .DS_Store

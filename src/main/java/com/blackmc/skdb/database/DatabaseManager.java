@@ -1,47 +1,31 @@
 package com.blackmc.skdb.database;
 
-import java.util.ArrayList;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.bukkit.Bukkit;
 
 public class DatabaseManager {
 
-    private static ArrayList<Class<?>> annotatedClasses = new ArrayList<Class<?>>();
+    private static Database database = null;
 
-    public static Session database;
+    public static void registerDatabase(final DatabaseConfiguration config) {
 
-    public static boolean registerDatabaseConnection(DatabaseConfiguration config) {
-        
-        StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
-            .applySetting("hibernate.connection.url", config.getUrl())
-            .applySetting("hibernate.connection.username", config.getUsername())
-            .applySetting("hibernate.connection.password", config.getPassword())
-            .applySetting("hibernate.connection.driver_class", config.getDriver())
-            .applySetting("hibernate.dialect", config.getDialect())
-            .build();
+        final HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setDriverClassName(config.getDriver());
+        hikariConfig.setJdbcUrl(config.getUrl());
+        hikariConfig.setUsername(config.getUsername());
+        hikariConfig.setPassword(config.getPassword());
+        hikariConfig.setConnectionTimeout(1000);
+        hikariConfig.setAutoCommit(true);
 
-        MetadataSources sources = new MetadataSources(standardRegistry);
-        for(Class<?> clazz : annotatedClasses) {
-            sources.addAnnotatedClass(clazz);
-        }
-        Metadata metadata = sources.buildMetadata();
-
-        SessionFactory sessionFactory = metadata.buildSessionFactory();
-        Session session = sessionFactory.openSession();
-
-        database = session;
-
-        return session != null;
-
+        HikariDataSource ds = new HikariDataSource(hikariConfig);
+        database = new Database(ds);
     }
 
-    public static void registerClass(Class<?> clazz) {
-        if(!annotatedClasses.contains(clazz)) annotatedClasses.add(clazz);
+    public static Database getDatabase() {
+        if(database == null) Bukkit.getLogger().warning("Attempting to retrive database when it's not registered");
+        return database;
     }
 
 }

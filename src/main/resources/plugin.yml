@@ -1,10 +1,5 @@
 main: com.blackmc.skdb.SkDB
 name: SkDB
-softdepend: [  ]
-depend: [  ]
+depend: [ Skript ]
 version: 1.0
 api-version: 1.16
-
-commands:
-  test:
-    description: Test command

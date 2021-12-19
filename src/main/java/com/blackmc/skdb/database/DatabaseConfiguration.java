@@ -1,58 +1,52 @@
 package com.blackmc.skdb.database;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class DatabaseConfiguration {
 
-    private String username;
-    private String password;
     private String driver;
     private String dialect;
+    private String username;
+    private String password;
     private String url;
 
-    public DatabaseConfiguration(DatabaseType type, String ip, String port, String database, String username, String password, String... options) {
-        this.username = username;
-        this.password = password != null ? password : "";
+    public DatabaseConfiguration(DatabaseType type, String ip, String port, String database, String username, String password) {
         this.driver = type.getDriver();
         this.dialect = type.getDialect();
-        this.url = buildURLString(type, ip, port, database, new ArrayList<String>(Arrays.asList(options)));
+        this.username = username;
+        this.password = password != null ? password : "";
+        this.url = buildURLString(type, ip, port, database);
     }
  
     public DatabaseConfiguration(DatabaseType type, String url, String username, String password) {
-        this.username = username;
-        this.password = password != null ? password : "";
         this.driver = type.getDriver();
         this.dialect = type.getDialect();
+        this.username = username;
+        this.password = password != null ? password : "";
         this.url = url;
     }
 
-    public static String buildURLString(DatabaseType type, String ip, String port, String database, ArrayList<String> options) {
+    private static String buildURLString(DatabaseType type, String ip, String port, String database) {
         if(type.equals(DatabaseType.MYSQL)) {
             String url = "jdbc:" + type.getName() + "://" + ip + (port != null ? ":" + port : "") + "/" + database;
-            for(int i = 0; i < options.size(); i++) {
-                url += (i == 0 ? "?" + options.get(i) : "&" + options.get(i));
-            }
             return url;
         } else {
             return null;
         }
     }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
+    
     public String getDialect() {
         return dialect;
     }
 
     public String getDriver() {
         return driver;
+    }
+    
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getUrl() {
