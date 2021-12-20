@@ -1,9 +1,9 @@
 package com.blackmc.skdb.database;
 
+import java.util.NoSuchElementException;
+
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
-import org.bukkit.Bukkit;
 
 public class DatabaseManager {
 
@@ -24,7 +24,8 @@ public class DatabaseManager {
     }
 
     public static Database getDatabase() {
-        if(database == null) Bukkit.getLogger().warning("Attempting to retrive database when it's not registered");
+        if(database == null) throw new NoSuchElementException("Attempting to retrieve database when it has not yet been registered");
+        // TODO Store the warning
         return database;
     }
 

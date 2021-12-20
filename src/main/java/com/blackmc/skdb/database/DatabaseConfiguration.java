@@ -8,10 +8,7 @@ public class DatabaseConfiguration {
     private String url;
 
     public DatabaseConfiguration(DatabaseType type, String ip, String port, String database, String username, String password) {
-        this.driver = type.getDriver();
-        this.username = username;
-        this.password = password != null ? password : "";
-        this.url = buildURLString(type, ip, port, database);
+        this(type, buildURLString(type, ip, port, database), username, password);
     }
  
     public DatabaseConfiguration(DatabaseType type, String url, String username, String password) {
@@ -23,8 +20,7 @@ public class DatabaseConfiguration {
 
     private static String buildURLString(DatabaseType type, String ip, String port, String database) {
         if(type.equals(DatabaseType.MYSQL)) {
-            String url = "jdbc:" + type.getName() + "://" + ip + (port != null ? ":" + port : "") + "/" + database;
-            return url;
+            return "jdbc:" + type.getName() + "://" + ip + (port != null ? ":" + port : "") + "/" + database;
         } else {
             return null;
         }

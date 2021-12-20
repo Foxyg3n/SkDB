@@ -22,7 +22,7 @@ public class ValueExpr extends SimpleExpression<Object> {
     Expression<String> queryExpression;
 
     @Override
-    public Class<Object> getReturnType() {
+    public Class<? extends Object> getReturnType() {
         return Object.class;
     }
 

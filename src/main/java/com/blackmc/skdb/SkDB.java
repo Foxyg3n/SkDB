@@ -37,9 +37,4 @@ public class SkDB extends JavaPlugin {
 
     }
 
-    @Override
-    public void onDisable() {
-        getLogger().info("Disabling SkDB...");
-    }
-
 }

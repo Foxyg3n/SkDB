@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import com.blackmc.skdb.database.Database;
 import com.blackmc.skdb.database.DatabaseManager;
 import com.blackmc.skdb.database.wrappers.Record;
+import com.blackmc.skdb.database.wrappers.Table;
 
 import org.bukkit.event.Event;
 
@@ -49,8 +50,8 @@ public class SetExpr extends SimpleExpression<Record> {
     protected Record[] get(Event event) {
         String query = queryExpression.getSingle(event);
         Database database = DatabaseManager.getDatabase();
-        Record[] set = database.getSetFromQuery(query);
-        return set;
+        Table set = database.getSetFromQuery(query);
+        return set.getRecordsAsArray();
     }
     
 }
